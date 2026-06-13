@@ -10,11 +10,11 @@
 body {
   font-family: "Meiryo", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
                "Yu Gothic", "YuGothic", sans-serif;
-  background: #f5f5f5;
-  color: #222;
+  background: #121212;
+  color: #e0e0e0;
   line-height: 1.8;
 }
-a { color: #1a73e8; text-decoration: none; }
+a { color: #8ab4f8; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* ページ共通コンテナ */
@@ -31,24 +31,44 @@ a:hover { text-decoration: underline; }
 
 /* ヘッダ */
 .site-header {
-  background: #fff;
-  border-bottom: 2px solid #e0e0e0;
+  background: #1e1e1e;
+  border-bottom: 2px solid #333;
   padding: 16px 0;
   margin-bottom: 32px;
 }
+.site-header .container { position: relative; }
 .site-header h1 {
   font-size: 1.4rem;
   font-weight: 700;
   text-align: center;
-  color: #333;
+  letter-spacing: 0.06em;
+  color: #d8b865;
+  background: linear-gradient(135deg, #f0e0a8 0%, #d8b865 45%, #a8852e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+.lang-switch {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #d8b865;
+  border: 1px solid #d8b865;
+  border-radius: 16px;
+  padding: 3px 12px;
+  text-decoration: none;
+}
+.lang-switch:hover { background: #2a2416; text-decoration: none; }
 
 /* セクション見出し */
 .section-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #444;
-  border-left: 4px solid #1a73e8;
+  color: #ccc;
+  border-left: 4px solid #8ab4f8;
   padding-left: 10px;
   margin-bottom: 16px;
 }
@@ -73,7 +93,7 @@ a:hover { text-decoration: underline; }
   margin-bottom: 40px;
 }
 .card {
-  background: #fff;
+  background: #1e1e1e;
   border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0,0,0,.09);
   padding: 18px 20px;
@@ -88,7 +108,7 @@ a:hover { text-decoration: underline; }
 }
 .card-meta {
   font-size: 0.85rem;
-  color: #666;
+  color: #999;
   margin-bottom: 10px;
 }
 .card-actions {
@@ -107,11 +127,11 @@ a:hover { text-decoration: underline; }
   font-weight: 600;
   white-space: nowrap;
 }
-.badge-green  { background: #e6f4ea; color: #1e7e34; }
-.badge-yellow { background: #fff3cd; color: #856404; }
-.badge-gray   { background: #e9ecef; color: #555; }
-.badge-red    { background: #fce8e6; color: #c0392b; }
-.badge-blue   { background: #e8f0fe; color: #1a73e8; }
+.badge-green  { background: #1e3a28; color: #81c995; }
+.badge-yellow { background: #3d3322; color: #fdd663; }
+.badge-gray   { background: #333; color: #bbb; }
+.badge-red    { background: #3c2422; color: #f28b82; }
+.badge-blue   { background: #1f2a3c; color: #8ab4f8; }
 
 /* 外部リンクボタン */
 .btn-yt {
@@ -134,11 +154,11 @@ a:hover { text-decoration: underline; }
   margin-bottom: 12px;
 }
 .meta-block {
-  background: #f8f9fa;
+  background: #1c1c1c;
   border-radius: 8px;
   padding: 12px 16px;
   font-size: 0.88rem;
-  color: #555;
+  color: #aaa;
   margin-bottom: 24px;
   line-height: 1.9;
   overflow-wrap: anywhere;
@@ -158,11 +178,11 @@ a:hover { text-decoration: underline; }
   margin-bottom: 1.2em;
 }
 .no-transcript-msg {
-  background: #f8f9fa;
-  border-left: 4px solid #ccc;
+  background: #1c1c1c;
+  border-left: 4px solid #555;
   padding: 14px 18px;
   border-radius: 4px;
-  color: #666;
+  color: #999;
   font-size: 0.93rem;
   margin-bottom: 16px;
 }
@@ -173,16 +193,16 @@ summary {
   cursor: pointer;
   font-weight: 600;
   font-size: 0.9rem;
-  color: #555;
+  color: #aaa;
   padding: 6px 0;
   user-select: none;
 }
 .details-body {
-  background: #f8f9fa;
+  background: #1c1c1c;
   border-radius: 6px;
   padding: 14px 16px;
   font-size: 0.88rem;
-  color: #444;
+  color: #bbb;
   margin-top: 8px;
   white-space: pre-wrap;
   line-height: 1.7;
@@ -192,14 +212,14 @@ summary {
 .digest-content {
   max-width: 760px;
 }
-.digest-content h1 { font-size: 1.4rem; margin: 24px 0 12px; color: #333; }
-.digest-content h2 { font-size: 1.15rem; margin: 20px 0 8px; color: #444;
-                     border-bottom: 1px solid #e0e0e0; padding-bottom: 4px; }
-.digest-content h3 { font-size: 1.0rem; margin: 16px 0 6px; color: #555; }
+.digest-content h1 { font-size: 1.4rem; margin: 24px 0 12px; color: #ddd; }
+.digest-content h2 { font-size: 1.15rem; margin: 20px 0 8px; color: #ccc;
+                     border-bottom: 1px solid #333; padding-bottom: 4px; }
+.digest-content h3 { font-size: 1.0rem; margin: 16px 0 6px; color: #bbb; }
 .digest-content p  { margin-bottom: 1.1em; }
 .digest-content ul { list-style: disc; padding-left: 1.5em; margin-bottom: 1em; }
 .digest-content ul li { margin-bottom: 0.3em; }
-.digest-content hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
+.digest-content hr { border: none; border-top: 1px solid #333; margin: 20px 0; }
 .digest-content strong { font-weight: 700; }
 
 /* ─── 動画一覧テーブル ─── */
@@ -213,24 +233,24 @@ summary {
   font-size: 0.8rem;
 }
 .video-table th {
-  background: #e8f0fe;
-  color: #1a3a5c;
+  background: #1f2a3c;
+  color: #8ab4f8;
   font-weight: 700;
   padding: 6px 8px;
   white-space: nowrap;
-  border-bottom: 2px solid #b3c6f7;
+  border-bottom: 2px solid #2d4a77;
   text-align: left;
 }
 .video-table td {
   padding: 5px 8px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #2a2a2a;
   vertical-align: top;
 }
-.video-table tr:nth-child(even) td { background: #f9f9f9; }
-.video-table tr:hover td { background: #f0f4ff; }
+.video-table tr:nth-child(even) td { background: #181818; }
+.video-table tr:hover td { background: #222a38; }
 .video-table .col-date   { white-space: nowrap; }
 .video-table .col-title  { white-space: nowrap; }
-.video-table .title-ch   { color: #777; font-size: 0.74rem; display: inline-block; max-width: 11em; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; }
+.video-table .title-ch   { color: #888; font-size: 0.74rem; display: inline-block; max-width: 11em; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; }
 .video-table .summary-topic { font-weight: 700; }
 .video-table .col-type   { white-space: nowrap; }
 .video-table .col-summary { min-width: 7em; word-break: break-all; }
@@ -238,27 +258,27 @@ summary {
 .video-table .col-like   { white-space: nowrap; }
 .video-table .col-yt     { white-space: nowrap; }
 .stars-filled  { color: #f5a623; }
-.stars-empty   { color: #ccc; }
-.unrated-gray  { color: #aaa; font-size: 0.78rem; }
+.stars-empty   { color: #555; }
+.unrated-gray  { color: #777; font-size: 0.78rem; }
 .btn-like {
   background: none;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #444;
   border-radius: 12px;
   cursor: pointer;
   padding: 1px 7px;
   font-size: 0.8rem;
-  color: #c0392b;
+  color: #f28b82;
   transition: background .1s;
 }
-.btn-like:hover { background: #fce8e6; }
+.btn-like:hover { background: #3c2422; }
 .like-reset {
   font-size: 0.7rem;
-  color: #aaa;
+  color: #777;
   cursor: pointer;
   margin-left: 4px;
   text-decoration: none;
 }
-.like-reset:hover { color: #c0392b; }
+.like-reset:hover { color: #f28b82; }
 
 /* スマホ対応 */
 @media (max-width: 600px) {
@@ -275,7 +295,7 @@ summary {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    background: #fff;
+    background: #1e1e1e;
     border-radius: 10px;
     box-shadow: 0 1px 4px rgba(0,0,0,.09);
     padding: 12px 14px;
@@ -305,7 +325,7 @@ summary {
     word-break: normal;
     overflow-wrap: anywhere;
     font-size: 0.85rem;
-    color: #444;
+    color: #bbb;
     margin-bottom: 8px;
   }
   /* 3行目: 日付・タイプ・評価・いいね・元動画を横並び */
@@ -322,7 +342,8 @@ summary {
 <body>
   <header class="site-header">
     <div class="container">
-      <h1><a href="index.html" style="color:inherit;text-decoration:none;">ラニータさんの動画ライブラリ</a></h1>
+      <h1><a href="index.html" style="color:inherit;text-decoration:none;">Raneeta Library</a></h1>
+      <a class="lang-switch" href="video_jNQXAC9IVRw_en.html">EN</a>
     </div>
   </header>
   <main class="container">
