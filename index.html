@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ラニータさんの動画ライブラリ</title>
+  <style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Meiryo", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+               "Yu Gothic", "YuGothic", sans-serif;
+  background: #f5f5f5;
+  color: #222;
+  line-height: 1.8;
+}
+a { color: #1a73e8; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ページ共通コンテナ */
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+/* 一覧ページ用: 画面幅いっぱい */
+.container.wide {
+  max-width: none;
+  padding: 24px 28px;
+}
+
+/* ヘッダ */
+.site-header {
+  background: #fff;
+  border-bottom: 2px solid #e0e0e0;
+  padding: 16px 0;
+  margin-bottom: 32px;
+}
+.site-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  color: #333;
+}
+
+/* セクション見出し */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #444;
+  border-left: 4px solid #1a73e8;
+  padding-left: 10px;
+  margin-bottom: 16px;
+}
+
+/* ダイジェストリンクリスト */
+.digest-list {
+  list-style: none;
+  margin-bottom: 40px;
+}
+.digest-list li {
+  margin-bottom: 8px;
+}
+.digest-list li a {
+  font-size: 0.97rem;
+}
+
+/* 動画カード */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.09);
+  padding: 18px 20px;
+  transition: box-shadow .15s;
+}
+.card:hover { box-shadow: 0 3px 10px rgba(0,0,0,.14); }
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.card-meta {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* バッジ */
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-green  { background: #e6f4ea; color: #1e7e34; }
+.badge-yellow { background: #fff3cd; color: #856404; }
+.badge-gray   { background: #e9ecef; color: #555; }
+.badge-red    { background: #fce8e6; color: #c0392b; }
+.badge-blue   { background: #e8f0fe; color: #1a73e8; }
+
+/* 外部リンクボタン */
+.btn-yt {
+  display: inline-block;
+  font-size: 0.78rem;
+  padding: 3px 11px;
+  border-radius: 20px;
+  background: #ff0000;
+  color: #fff !important;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+.btn-yt:hover { background: #cc0000; }
+
+/* ─── 個別ページ ─── */
+.page-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.meta-block {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  color: #555;
+  margin-bottom: 24px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+/* 本文 */
+.transcript {
+  max-width: 760px;
+  font-size: 0.97rem;
+}
+.transcript p {
+  margin-bottom: 1.2em;
+}
+.no-transcript-msg {
+  background: #f8f9fa;
+  border-left: 4px solid #ccc;
+  padding: 14px 18px;
+  border-radius: 4px;
+  color: #666;
+  font-size: 0.93rem;
+  margin-bottom: 16px;
+}
+details {
+  margin-top: 20px;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #555;
+  padding: 6px 0;
+  user-select: none;
+}
+.details-body {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 0.88rem;
+  color: #444;
+  margin-top: 8px;
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
+
+/* ─── ダイジェストページ ─── */
+.digest-content {
+  max-width: 760px;
+}
+.digest-content h1 { font-size: 1.4rem; margin: 24px 0 12px; color: #333; }
+.digest-content h2 { font-size: 1.15rem; margin: 20px 0 8px; color: #444;
+                     border-bottom: 1px solid #e0e0e0; padding-bottom: 4px; }
+.digest-content h3 { font-size: 1.0rem; margin: 16px 0 6px; color: #555; }
+.digest-content p  { margin-bottom: 1.1em; }
+.digest-content ul { list-style: disc; padding-left: 1.5em; margin-bottom: 1em; }
+.digest-content ul li { margin-bottom: 0.3em; }
+.digest-content hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
+.digest-content strong { font-weight: 700; }
+
+/* ─── 動画一覧テーブル ─── */
+.video-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 40px;
+}
+.video-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.video-table th {
+  background: #e8f0fe;
+  color: #1a3a5c;
+  font-weight: 700;
+  padding: 6px 8px;
+  white-space: nowrap;
+  border-bottom: 2px solid #b3c6f7;
+  text-align: left;
+}
+.video-table td {
+  padding: 5px 8px;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: top;
+}
+.video-table tr:nth-child(even) td { background: #f9f9f9; }
+.video-table tr:hover td { background: #f0f4ff; }
+.video-table .col-date   { white-space: nowrap; }
+.video-table .col-title  { white-space: nowrap; }
+.video-table .title-ch   { color: #777; font-size: 0.74rem; display: inline-block; max-width: 11em; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; }
+.video-table .summary-topic { font-weight: 700; }
+.video-table .col-type   { white-space: nowrap; }
+.video-table .col-summary { min-width: 7em; word-break: break-all; }
+.video-table .col-stars  { white-space: nowrap; }
+.video-table .col-like   { white-space: nowrap; }
+.video-table .col-yt     { white-space: nowrap; }
+.stars-filled  { color: #f5a623; }
+.stars-empty   { color: #ccc; }
+.unrated-gray  { color: #aaa; font-size: 0.78rem; }
+.btn-like {
+  background: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 1px 7px;
+  font-size: 0.8rem;
+  color: #c0392b;
+  transition: background .1s;
+}
+.btn-like:hover { background: #fce8e6; }
+.like-reset {
+  font-size: 0.7rem;
+  color: #aaa;
+  cursor: pointer;
+  margin-left: 4px;
+  text-decoration: none;
+}
+.like-reset:hover { color: #c0392b; }
+
+/* スマホ対応 */
+@media (max-width: 600px) {
+  .site-header h1 { font-size: 1.1rem; }
+  .page-title { font-size: 1.1rem; }
+  .card { padding: 14px 14px; }
+  .container.wide { padding: 16px 10px; }
+
+  /* 一覧テーブル → カード型レイアウト */
+  .video-table-wrap { overflow-x: visible; }
+  .video-table, .video-table tbody { display: block; width: 100%; }
+  .video-table thead { display: none; }
+  .video-table tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.09);
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+  .video-table td {
+    display: block;
+    border: none;
+    padding: 0;
+    background: none !important;
+  }
+  .video-table tr:nth-child(even) td,
+  .video-table tr:hover td { background: none !important; }
+  /* 1行目: タイトル(全幅) */
+  .video-table .col-title {
+    order: 1;
+    width: 100%;
+    white-space: normal;
+    font-size: 0.98rem;
+    margin-bottom: 4px;
+  }
+  .video-table .title-ch { max-width: none; }
+  /* 2行目: 概要+説明(全幅) */
+  .video-table .col-summary {
+    order: 2;
+    width: 100%;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    font-size: 0.85rem;
+    color: #444;
+    margin-bottom: 8px;
+  }
+  /* 3行目: 日付・タイプ・評価・いいね・元動画を横並び */
+  .video-table .col-date  { order: 3; font-size: 0.78rem; color: #888; margin-right: 10px; }
+  .video-table .col-type  { order: 4; font-size: 0.78rem; color: #888; margin-right: 10px; }
+  .video-table .col-stars { order: 5; font-size: 0.82rem; margin-right: auto; }
+  .video-table .col-like  { order: 6; margin-right: 12px; }
+  .video-table .col-yt    { order: 7; }
+  .video-table .col-yt a  { font-size: 1.05rem; padding: 2px 6px; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1><a href="index.html" style="color:inherit;text-decoration:none;">ラニータさんの動画ライブラリ</a></h1>
+    </div>
+  </header>
+  <main class="container wide">
+<section>
+<h2 class="section-title">動画一覧</h2>
+<div class="video-table-wrap">
+<table class="video-table">
+<thead><tr>
+  <th>追加日</th>
+  <th>タイプ</th>
+  <th>タイトル<br>動画主</th>
+  <th>内容</th>
+  <th>AI評価</th>
+  <th>いいね</th>
+  <th>元動画</th>
+</tr></thead>
+<tbody>
+  <tr>
+    <td class="col-date">06/13</td>
+    <td class="col-type">ショート動画</td>
+    <td class="col-title"><a href="video_ZPxJXqaGUt8.html" title="The Idea That Your Cells Can Be Reprogrammed 🤯 ✨ | Gregg Braden">The Idea That Y…</a><br><span class="title-ch" title="Imagine &amp; Attract">Imagine &amp; Attract</span></td>
+    <td class="col-summary"><span class="summary-topic">■細胞の再プログラム説</span><br>作家グレッグ・ブレイデンが「細胞は電気回路であり、人は意識でそれを制御して治癒・直感・回復力に使える」と語るスピリチュアル系クリップ。体全体で3兆ボルト等の主張は科学的には根拠が薄い点に注意。</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('ZPxJXqaGUt8')">&#10084; <span id="lc_ZPxJXqaGUt8">0</span></button><a class="like-reset" onclick="resetLike('ZPxJXqaGUt8')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=ZPxJXqaGUt8" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">06/13</td>
+    <td class="col-type">長尺動画</td>
+    <td class="col-title"><a href="video_SODYpdUuIuo.html" title="Home&#x27;s Slow Poison- Microwave, Salt, cotton, Toothbrush| Barbara O’Neill on Body to Beiing | Shlloka">Home&#x27;s Slow Poi…</a><br><span class="title-ch" title="SHLLOKA">SHLLOKA</span></td>
+    <td class="col-summary"><span class="summary-topic">■日常生活の有害なもの</span><br><span class="unrated-gray">日本語訳 取得待ち</span></td>
+    <td class="col-stars"><span class="unrated-gray">未評価</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('SODYpdUuIuo')">&#10084; <span id="lc_SODYpdUuIuo">0</span></button><a class="like-reset" onclick="resetLike('SODYpdUuIuo')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=SODYpdUuIuo" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">06/13</td>
+    <td class="col-type">ショート動画</td>
+    <td class="col-title"><a href="video_jNQXAC9IVRw.html" title="Me at the zoo">Me at the zoo</a><br><span class="title-ch" title="jawed">jawed</span></td>
+    <td class="col-summary"><span class="summary-topic">■YouTube最初の動画</span><br>YouTube共同創業者ジャウェド・カリムが動物園の象の前で「象の鼻はとても長い」と語るだけの19秒。内容より「YouTubeに最初に投稿された動画」という歴史的価値で知られるネタ・資料系の一本。</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('jNQXAC9IVRw')">&#10084; <span id="lc_jNQXAC9IVRw">0</span></button><a class="like-reset" onclick="resetLike('jNQXAC9IVRw')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=jNQXAC9IVRw" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+</tbody>
+</table>
+</div>
+</section>
+<script>
+(function() {
+  // ページ読み込み時にlocalStorageからいいね数を復元
+  var els = document.querySelectorAll('[id^="lc_"]');
+  els.forEach(function(el) {
+    var vid = el.id.slice(3);
+    var val = localStorage.getItem('like_' + vid);
+    if (val !== null) el.textContent = val;
+  });
+})();
+
+function addLike(vid) {
+  var el = document.getElementById('lc_' + vid);
+  if (!el) return;
+  var cur = parseInt(localStorage.getItem('like_' + vid) || '0', 10);
+  cur += 1;
+  el.textContent = cur;
+  localStorage.setItem('like_' + vid, cur);
+}
+
+function resetLike(vid) {
+  var el = document.getElementById('lc_' + vid);
+  if (!el) return;
+  el.textContent = '0';
+  localStorage.setItem('like_' + vid, '0');
+}
+</script>
+  </main>
+</body>
+</html>
