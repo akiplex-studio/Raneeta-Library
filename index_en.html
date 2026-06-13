@@ -257,6 +257,10 @@ summary {
 .video-table .col-stars  { white-space: nowrap; }
 .video-table .col-like   { white-space: nowrap; }
 .video-table .col-yt     { white-space: nowrap; }
+.video-table .col-duration { white-space: nowrap; text-align: right; font-size: 0.82rem; }
+.video-table .col-views { white-space: nowrap; text-align: right; font-size: 0.82rem; }
+.video-table .col-likes { white-space: nowrap; text-align: right; font-size: 0.82rem; }
+.video-table .col-momentum { white-space: nowrap; text-align: right; font-size: 0.82rem; color: #e8a735; }
 .stars-filled  { color: #f5a623; }
 .stars-empty   { color: #555; }
 .unrated-gray  { color: #777; font-size: 0.78rem; }
@@ -335,7 +339,23 @@ summary {
   .video-table .col-like  { order: 6; margin-right: 12px; }
   .video-table .col-yt    { order: 7; }
   .video-table .col-yt a  { font-size: 1.05rem; padding: 2px 6px; }
+  .video-table .col-duration { order: 8; font-size: 0.78rem; color: #888; }
+  .video-table .col-views { order: 9; font-size: 0.78rem; color: #888; }
+  .video-table .col-likes { order: 10; font-size: 0.78rem; color: #888; }
+  .video-table .col-momentum { order: 11; font-size: 0.78rem; }
 }
+
+/* フィルターバー */
+.filter-bar {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.9rem;
+}
+.filter-bar label { cursor: pointer; color: #aaa; }
+.filter-bar input[type="checkbox"] { margin-right: 4px; }
+.filter-label { color: #888; font-weight: 700; }
 
   </style>
 </head>
@@ -395,13 +415,22 @@ function submitAddUrl(e) {
 </script>
 <section>
 <h2 class="section-title">Videos</h2>
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <label><input type="checkbox" id="filter-short" checked onchange="applyFilter()"> Shorts</label>
+  <label><input type="checkbox" id="filter-long" checked onchange="applyFilter()"> Long</label>
+</div>
 <div class="video-table-wrap">
 <table class="video-table">
 <thead><tr>
-  <th>Added</th>
+  <th>Published</th>
   <th>Type</th>
   <th>Title<br>Channel</th>
+  <th>Duration</th>
   <th>Summary</th>
+  <th>Views</th>
+  <th>Likes</th>
+  <th>Momentum</th>
   <th>AI Rating</th>
   <th>Like</th>
   <th>Watch</th>
@@ -409,27 +438,351 @@ function submitAddUrl(e) {
 <tbody>
   <tr>
     <td class="col-date">06/13</td>
-    <td class="col-type">Short</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_kR2g9wAm8x4_en.html" title="You didn&#x27;t come here to escape life. You came here to live it.">You didn&#x27;t come…</a><br><span class="title-ch" title="TribeOfSamuel">TribeOfSamuel</span></td>
+    <td class="col-duration">—</td>
+    <td class="col-summary"><span class="summary-topic">■Descended mastery</span><br>A spiritual short: &quot;You didn&#x27;t come here to escape your divine nature — you came to bring it into human form.&quot; The speaker introduces the id…</td>
+    <td class="col-views">—</td>
+    <td class="col-likes">—</td>
+    <td class="col-momentum">—</td>
+    <td class="col-stars"><span class="stars-filled">★★★</span><span class="stars-empty">★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('kR2g9wAm8x4')">&#10084; <span id="lc_kR2g9wAm8x4">0</span></button><a class="like-reset" onclick="resetLike('kR2g9wAm8x4')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=kR2g9wAm8x4" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/11</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
     <td class="col-title"><a href="video_ZPxJXqaGUt8_en.html" title="The Idea That Your Cells Can Be Reprogrammed 🤯 ✨ | Gregg Braden">The Idea That Y…</a><br><span class="title-ch" title="Imagine &amp; Attract">Imagine &amp; Attract</span></td>
+    <td class="col-duration">1:29</td>
     <td class="col-summary"><span class="summary-topic">■The &quot;cells as circuits&quot; theory</span><br>Spiritual author Gregg Braden claims that &quot;cells are electrical circuits, and humans can consciously control them for healing, intuition, an…</td>
+    <td class="col-views">6,102</td>
+    <td class="col-likes">431</td>
+    <td class="col-momentum">3,051/d</td>
     <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
     <td class="col-like"><button class="btn-like" onclick="addLike('ZPxJXqaGUt8')">&#10084; <span id="lc_ZPxJXqaGUt8">0</span></button><a class="like-reset" onclick="resetLike('ZPxJXqaGUt8')" href="#">&#215;</a></td>
     <td class="col-yt"><a href="https://www.youtube.com/watch?v=ZPxJXqaGUt8" target="_blank" rel="noopener">&#9654;</a></td>
   </tr>
   <tr>
-    <td class="col-date">06/13</td>
-    <td class="col-type">Long</td>
-    <td class="col-title"><a href="video_SODYpdUuIuo_en.html" title="Home&#x27;s Slow Poison- Microwave, Salt, cotton, Toothbrush| Barbara O’Neill on Body to Beiing | Shlloka">Home&#x27;s Slow Poi…</a><br><span class="title-ch" title="SHLLOKA">SHLLOKA</span></td>
-    <td class="col-summary"><span class="summary-topic">■日常生活の有害なもの</span><br><span class="unrated-gray">Translation pending</span></td>
+    <td class="col-date">2026/06/06</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_4EqkbCAdG30_en.html" title="The Dragon Triangle!">The Dragon Tria…</a><br><span class="title-ch" title="4biddenknowledge Podcast Network">4biddenknowledge Podcast Network</span></td>
+    <td class="col-duration">1:05</td>
+    <td class="col-summary"><span class="summary-topic">■The Dragon Triangle</span><br>Links the Bermuda Triangle to Japan&#x27;s Dragon Triangle (Yonaguni underwater pyramid) on the opposite side of the Earth, claiming advanced anc…</td>
+    <td class="col-views">2万</td>
+    <td class="col-likes">3,506</td>
+    <td class="col-momentum">4,159/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('4EqkbCAdG30')">&#10084; <span id="lc_4EqkbCAdG30">0</span></button><a class="like-reset" onclick="resetLike('4EqkbCAdG30')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=4EqkbCAdG30" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/06</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_ITbmLZuqmq4_en.html" title="ChatGPT explained Jesus better than my Church ever did #ai #spirituality">ChatGPT explain…</a><br><span class="title-ch" title="The Paradigm Experience">The Paradigm Experience</span></td>
+    <td class="col-duration">2:57</td>
+    <td class="col-summary"><span class="summary-topic">■ChatGPT explains Jesus</span><br>An experiment asking ChatGPT to explain famous Jesus quotes without the religious packaging. Covers the kingdom of God is within you, the tr…</td>
+    <td class="col-views">2万</td>
+    <td class="col-likes">2,718</td>
+    <td class="col-momentum">3,887/d</td>
+    <td class="col-stars"><span class="stars-filled">★★★</span><span class="stars-empty">★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('ITbmLZuqmq4')">&#10084; <span id="lc_ITbmLZuqmq4">0</span></button><a class="like-reset" onclick="resetLike('ITbmLZuqmq4')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=ITbmLZuqmq4" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/06</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_meZZ29eD_eM_en.html" title="Michael’s Last Message about saving the Earth #michaeljackson #shorts #ytshorts #viralshort">Michael’s Last …</a><br><span class="title-ch" title="Illumi Nation">Illumi Nation</span></td>
+    <td class="col-duration">0:37</td>
+    <td class="col-summary"><span class="summary-topic">■[No subtitles] MJ last message on saving Earth</span><br>[No subtitles] A short clip (37 seconds) of Michael Jackson speaking about saving the Earth and environmental protection. MJ frequently addr…</td>
+    <td class="col-views">2万</td>
+    <td class="col-likes">1,913</td>
+    <td class="col-momentum">3,574/d</td>
+    <td class="col-stars"><span class="stars-filled">★★★</span><span class="stars-empty">★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('meZZ29eD_eM')">&#10084; <span id="lc_meZZ29eD_eM">0</span></button><a class="like-reset" onclick="resetLike('meZZ29eD_eM')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=meZZ29eD_eM" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/06</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_gwZnKBeFkHw_en.html" title="You need to STOP doing this one thing !">You need to STO…</a><br><span class="title-ch" title="4biddenknowledge Podcast Network">4biddenknowledge Podcast Network</span></td>
+    <td class="col-duration">0:40</td>
+    <td class="col-summary"><span class="summary-topic">■Don&#x27;t sleep with the TV on</span><br>Warns that sleeping with the TV or phone playing content lets the subconscious absorb it — a horror movie would program you because the subc…</td>
+    <td class="col-views">7万</td>
+    <td class="col-likes">4,526</td>
+    <td class="col-momentum">1万/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('gwZnKBeFkHw')">&#10084; <span id="lc_gwZnKBeFkHw">0</span></button><a class="like-reset" onclick="resetLike('gwZnKBeFkHw')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=gwZnKBeFkHw" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/04</td>
+    <td class="col-type" data-type="動画">Video</td>
+    <td class="col-title"><a href="video_q0JGAT4HZHE_en.html" title="ALERT‼️ &quot;Telepathy, Unity Consciousness And MORE!&quot; | The Council Of 5 - T&#x27;EEAH">ALERT‼️ &quot;Telepa…</a><br><span class="title-ch" title="GFL Station">GFL Station</span></td>
+    <td class="col-duration">7:07</td>
+    <td class="col-summary"><span class="summary-topic">■Telepathy and Unity Consciousness</span><br>A 7-minute channeled message claiming to come from T&#x27;EEAH, an Arcturian being. Covers &#x27;the collapse of the old self,&#x27; &#x27;the transition to tel…</td>
+    <td class="col-views">1万</td>
+    <td class="col-likes">1,467</td>
+    <td class="col-momentum">1,445/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('q0JGAT4HZHE')">&#10084; <span id="lc_q0JGAT4HZHE">0</span></button><a class="like-reset" onclick="resetLike('q0JGAT4HZHE')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=q0JGAT4HZHE" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/04</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video__dxQqEZjj64_en.html" title="What’s your thoughts on these digital price tags? 👁️">What’s your tho…</a><br><span class="title-ch" title="Conciousmb">Conciousmb</span></td>
+    <td class="col-duration">1:11</td>
+    <td class="col-summary"><span class="summary-topic">■Digital price tags and facial recognition</span><br>A conspiracy theory claiming that digital price tags replacing paper ones in grocery stores have cameras that use facial recognition to link…</td>
+    <td class="col-views">27万</td>
+    <td class="col-likes">1万</td>
+    <td class="col-momentum">3万/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('_dxQqEZjj64')">&#10084; <span id="lc__dxQqEZjj64">0</span></button><a class="like-reset" onclick="resetLike('_dxQqEZjj64')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=_dxQqEZjj64" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/04</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_MOKwy9bSmB8_en.html" title="Was she influencing the speakers speech? 👁️🤯">Was she influen…</a><br><span class="title-ch" title="Conciousmb">Conciousmb</span></td>
+    <td class="col-duration">0:36</td>
+    <td class="col-summary"><span class="summary-topic">■Speech manipulation at a hearing?</span><br>A 36-second clip of a congressional hearing where the speaker repeats the same phrase in a glitch-like loop. Framed as if a woman behind the…</td>
+    <td class="col-views">21万</td>
+    <td class="col-likes">9,600</td>
+    <td class="col-momentum">2万/d</td>
+    <td class="col-stars"><span class="stars-filled">★</span><span class="stars-empty">★★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('MOKwy9bSmB8')">&#10084; <span id="lc_MOKwy9bSmB8">0</span></button><a class="like-reset" onclick="resetLike('MOKwy9bSmB8')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=MOKwy9bSmB8" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/04</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_PblZb6mmmrE_en.html" title="THE SIGNAL WAS NEVER LOST">THE SIGNAL WAS …</a><br><span class="title-ch" title="SamuelbleeMD">SamuelbleeMD</span></td>
+    <td class="col-duration">1:38</td>
+    <td class="col-summary"><span class="summary-topic">■12 Tribes and DNA stargates</span><br>Reinterprets the 12 biblical tribes not as ethnic groups but as frequency codes mapped to a 12-strand DNA silicate matrix. Claims activating…</td>
+    <td class="col-views">5,843</td>
+    <td class="col-likes">753</td>
+    <td class="col-momentum">649/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('PblZb6mmmrE')">&#10084; <span id="lc_PblZb6mmmrE">0</span></button><a class="like-reset" onclick="resetLike('PblZb6mmmrE')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=PblZb6mmmrE" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/03</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_UVXT0o3G_ns_en.html" title="KNOWLEDGE IS FREEDOM">KNOWLEDGE IS FR…</a><br><span class="title-ch" title="SamuelbleeMD">SamuelbleeMD</span></td>
+    <td class="col-duration">1:49</td>
+    <td class="col-summary"><span class="summary-topic">■The truth about the Library of Alexandria</span><br>Claims the Library of Alexandria housed the last public copies of Emerald Founder Record translations and was deliberately burned by a Toth-…</td>
+    <td class="col-views">9,268</td>
+    <td class="col-likes">1,243</td>
+    <td class="col-momentum">926/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('UVXT0o3G_ns')">&#10084; <span id="lc_UVXT0o3G_ns">0</span></button><a class="like-reset" onclick="resetLike('UVXT0o3G_ns')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=UVXT0o3G_ns" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/02</td>
+    <td class="col-type" data-type="動画">Video</td>
+    <td class="col-title"><a href="video_gR9cVV1kwT8_en.html" title="This is a Warning to the USA...">This is a Warni…</a><br><span class="title-ch" title="Stefan Burns">Stefan Burns</span></td>
+    <td class="col-duration">12:47</td>
+    <td class="col-summary"><span class="summary-topic">■US East Coast fireball cluster</span><br>A GU physicist reports and analyzes three abnormal fireball/sonic-boom events in rapid succession along the US East Coast: a Michigan fireba…</td>
+    <td class="col-views">70万</td>
+    <td class="col-likes">2万</td>
+    <td class="col-momentum">6万/d</td>
+    <td class="col-stars"><span class="stars-filled">★★★</span><span class="stars-empty">★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('gR9cVV1kwT8')">&#10084; <span id="lc_gR9cVV1kwT8">0</span></button><a class="like-reset" onclick="resetLike('gR9cVV1kwT8')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=gR9cVV1kwT8" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/02</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_TsBig3XpwZs_en.html" title="Man shows how some songs have hidden messages when reversed.. 👁️😳">Man shows how s…</a><br><span class="title-ch" title="Conciousmb">Conciousmb</span></td>
+    <td class="col-duration">1:26</td>
+    <td class="col-summary"><span class="summary-topic">■Hidden messages in reversed songs?</span><br>A backmasking demo claiming songs like Stairway to Heaven contain satanic messages when played in reverse — &quot;cuz I live with Satan,&quot; &quot;the Lo…</td>
+    <td class="col-views">11万</td>
+    <td class="col-likes">6,628</td>
+    <td class="col-momentum">1万/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('TsBig3XpwZs')">&#10084; <span id="lc_TsBig3XpwZs">0</span></button><a class="like-reset" onclick="resetLike('TsBig3XpwZs')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=TsBig3XpwZs" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/02</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_2QUVP1zfuKY_en.html" title="CIA Hunting Human Hybrids 👽👀">CIA Hunting Hum…</a><br><span class="title-ch" title="Elizabeth April">Elizabeth April</span></td>
+    <td class="col-duration">2:24</td>
+    <td class="col-summary"><span class="summary-topic">■CIA tracking hybrid DNA?</span><br>Claims that the CIA is using 23andMe and ancestry.com databases to track individuals with &#x27;hybrid (alien-human) DNA,&#x27; citing an anonymous wh…</td>
+    <td class="col-views">12万</td>
+    <td class="col-likes">1万</td>
+    <td class="col-momentum">1万/d</td>
+    <td class="col-stars"><span class="stars-filled">★</span><span class="stars-empty">★★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('2QUVP1zfuKY')">&#10084; <span id="lc_2QUVP1zfuKY">0</span></button><a class="like-reset" onclick="resetLike('2QUVP1zfuKY')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=2QUVP1zfuKY" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/02</td>
+    <td class="col-type" data-type="長尺動画">Long</td>
+    <td class="col-title"><a href="video_DxlALqBvS0Q_en.html" title="The GREAT AWAKENING Is Happening FASTER Than Anyone Expected | Kyle Cease">The GREAT AWAKE…</a><br><span class="title-ch" title="Next Level Soul Podcast">Next Level Soul Podcast</span></td>
+    <td class="col-duration">2:19:48</td>
+    <td class="col-summary"><span class="summary-topic">■Ego, soul, and following your inner voice</span><br>A 2-hour+ spiritual interview with ex-comedian Kyle Cease. Covers the ego vs. true self, how childhood trauma builds the &#x27;I&#x27; character, the …</td>
+    <td class="col-views">11万</td>
+    <td class="col-likes">4,804</td>
+    <td class="col-momentum">1万/d</td>
+    <td class="col-stars"><span class="stars-filled">★★★</span><span class="stars-empty">★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('DxlALqBvS0Q')">&#10084; <span id="lc_DxlALqBvS0Q">0</span></button><a class="like-reset" onclick="resetLike('DxlALqBvS0Q')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=DxlALqBvS0Q" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/01</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_DZlR4fdLgBw_en.html" title="You are magic. Plasma is your clay. Use love and play. 🌹🌈🧝‍♀️ #magick #play #intuition">You are magic. …</a><br><span class="title-ch" title="Dana Kippel">Dana Kippel</span></td>
+    <td class="col-duration">2:59</td>
+    <td class="col-summary"><span class="summary-topic">■Plasma and divinity</span><br>A spiritual short claiming &#x27;plasma makes up 99.9% of visible matter, is the mother of the universe, and exists in human blood&#x27; and that &#x27;ang…</td>
+    <td class="col-views">2万</td>
+    <td class="col-likes">4,606</td>
+    <td class="col-momentum">2,314/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('DZlR4fdLgBw')">&#10084; <span id="lc_DZlR4fdLgBw">0</span></button><a class="like-reset" onclick="resetLike('DZlR4fdLgBw')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=DZlR4fdLgBw" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/06/01</td>
+    <td class="col-type" data-type="動画">Video</td>
+    <td class="col-title"><a href="video_ZpMBqCHX6ww_en.html" title="(取得失敗)">(取得失敗)</a></td>
+    <td class="col-duration">2:56</td>
+    <td class="col-summary"><span class="summary-topic">■[Fetch failed] Content unknown</span><br>Video data could not be fetched. Content is unknown. URL confirmed: https://www.youtube.com/watch?v=ZpMBqCHX6ww</td>
+    <td class="col-views">83万</td>
+    <td class="col-likes">8万</td>
+    <td class="col-momentum">6万/d</td>
     <td class="col-stars"><span class="unrated-gray">Not rated</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('ZpMBqCHX6ww')">&#10084; <span id="lc_ZpMBqCHX6ww">0</span></button><a class="like-reset" onclick="resetLike('ZpMBqCHX6ww')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=ZpMBqCHX6ww" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/05/29</td>
+    <td class="col-type" data-type="動画">Video</td>
+    <td class="col-title"><a href="video_Q9YQul2WSfA_en.html" title="“They’re Going To Kill Me” - Was Michael Jackson MURDERED?">“They’re Going …</a><br><span class="title-ch" title="Valuetainment">Valuetainment</span></td>
+    <td class="col-duration">20:40</td>
+    <td class="col-summary"><span class="summary-topic">■Was Michael Jackson murdered?</span><br>A podcast discussing MJ&#x27;s biopic (starring nephew Jaafar Jackson), his relationship with father Joe, his reported &#x27;they&#x27;re going to kill me&#x27;…</td>
+    <td class="col-views">37万</td>
+    <td class="col-likes">8,278</td>
+    <td class="col-momentum">2万/d</td>
+    <td class="col-stars"><span class="stars-filled">★★★</span><span class="stars-empty">★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('Q9YQul2WSfA')">&#10084; <span id="lc_Q9YQul2WSfA">0</span></button><a class="like-reset" onclick="resetLike('Q9YQul2WSfA')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=Q9YQul2WSfA" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/05/27</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_NansaaTavaw_en.html" title="The Universe Is Voice Activated">The Universe Is…</a><br><span class="title-ch" title="Billy Carson Official">Billy Carson Official</span></td>
+    <td class="col-duration">1:13</td>
+    <td class="col-summary"><span class="summary-topic">■The universe is voice-activated</span><br>Claims &#x27;the universe is voice-activated and your words are frequency commands to the quantum field.&#x27; Reinterprets Bible verses as &#x27;frequency…</td>
+    <td class="col-views">9,550</td>
+    <td class="col-likes">1,155</td>
+    <td class="col-momentum">561/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('NansaaTavaw')">&#10084; <span id="lc_NansaaTavaw">0</span></button><a class="like-reset" onclick="resetLike('NansaaTavaw')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=NansaaTavaw" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/05/15</td>
+    <td class="col-type" data-type="瞑想・音楽">瞑想・音楽</td>
+    <td class="col-title"><a href="video_988bLiAHZ04_en.html" title="Release suppressed emotions trapped in your fascia">Release suppres…</a><br><span class="title-ch" title="The Sound Healers ♪">The Sound Healers ♪</span></td>
+    <td class="col-duration">3:33:33</td>
+    <td class="col-summary"><span class="summary-topic">■[No subtitles] Releasing emotions trapped in fascia</span><br>[No subtitles] A long-form content (~213 min) based on the theory that suppressed emotions are stored in the fascia. Likely combines guided …</td>
+    <td class="col-views">11万</td>
+    <td class="col-likes">3,802</td>
+    <td class="col-momentum">3,866/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('988bLiAHZ04')">&#10084; <span id="lc_988bLiAHZ04">0</span></button><a class="like-reset" onclick="resetLike('988bLiAHZ04')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=988bLiAHZ04" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/05/15</td>
+    <td class="col-type" data-type="瞑想・音楽">瞑想・音楽</td>
+    <td class="col-title"><a href="video_fYA01MgsBw8_en.html" title="1 Hour Calm Morning Manifestation Music ✨ Powerful Affirmations for Abundance, Love &amp; Success">1 Hour Calm Mor…</a><br><span class="title-ch" title="Awenera">Awenera</span></td>
+    <td class="col-duration">1:01:44</td>
+    <td class="col-summary"><span class="summary-topic">■Morning affirmation music</span><br>A 1-hour calm morning manifestation music track with spoken affirmations for abundance, love, and success. Structured in 6 sections, repeate…</td>
+    <td class="col-views">4万</td>
+    <td class="col-likes">3,052</td>
+    <td class="col-momentum">1,694/d</td>
+    <td class="col-stars"><span class="stars-filled">★★★</span><span class="stars-empty">★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('fYA01MgsBw8')">&#10084; <span id="lc_fYA01MgsBw8">0</span></button><a class="like-reset" onclick="resetLike('fYA01MgsBw8')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=fYA01MgsBw8" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/05/12</td>
+    <td class="col-type" data-type="瞑想・音楽">瞑想・音楽</td>
+    <td class="col-title"><a href="video_iu4x1q9og2E_en.html" title="They Can’t Drain You After This ⚡ Energy Vampire Removal Frequency">They Can’t Drai…</a><br><span class="title-ch" title="The Sound Healers ♪">The Sound Healers ♪</span></td>
+    <td class="col-duration">2:16:32</td>
+    <td class="col-summary"><span class="summary-topic">■[No subtitles] Energy vampire removal frequency</span><br>[No subtitles] A long-form frequency/meditation content (~136 min) claiming to protect against energy vampires — people who drain your emoti…</td>
+    <td class="col-views">6万</td>
+    <td class="col-likes">3,460</td>
+    <td class="col-momentum">1,916/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('iu4x1q9og2E')">&#10084; <span id="lc_iu4x1q9og2E">0</span></button><a class="like-reset" onclick="resetLike('iu4x1q9og2E')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=iu4x1q9og2E" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/05/10</td>
+    <td class="col-type" data-type="動画">Video</td>
+    <td class="col-title"><a href="video_xKJ6NPEDuZA_en.html" title="The CIA Testimony That Shook the World… Then Was Banned Everywhere">The CIA Testimo…</a><br><span class="title-ch" title="Video Advice">Video Advice</span></td>
+    <td class="col-duration">23:48</td>
+    <td class="col-summary"><span class="summary-topic">■Ex-CIA agent whistleblower</span><br>An edited documentary presenting the historical whistleblower testimony of ex-CIA officer John Stockwell. Covers MK-Ultra, media manipulatio…</td>
+    <td class="col-views">23万</td>
+    <td class="col-likes">1万</td>
+    <td class="col-momentum">6,797/d</td>
+    <td class="col-stars"><span class="stars-filled">★★★★</span><span class="stars-empty">★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('xKJ6NPEDuZA')">&#10084; <span id="lc_xKJ6NPEDuZA">0</span></button><a class="like-reset" onclick="resetLike('xKJ6NPEDuZA')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=xKJ6NPEDuZA" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/04/22</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
+    <td class="col-title"><a href="video_sWGVyWwggac_en.html" title="Wait for the Milky Way!">Wait for the Mi…</a><br><span class="title-ch" title="Connor Paton">Connor Paton</span></td>
+    <td class="col-duration">0:54</td>
+    <td class="col-summary"><span class="summary-topic">■Milky Way timelapse</span><br>A stunning Milky Way timelapse shot from one of the world&#x27;s darkest locations. Captures the galaxy perfectly aligned over a valley alongside…</td>
+    <td class="col-views">1081万</td>
+    <td class="col-likes">41万</td>
+    <td class="col-momentum">20万/d</td>
+    <td class="col-stars"><span class="stars-filled">★★★★</span><span class="stars-empty">★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('sWGVyWwggac')">&#10084; <span id="lc_sWGVyWwggac">0</span></button><a class="like-reset" onclick="resetLike('sWGVyWwggac')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=sWGVyWwggac" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2026/02/21</td>
+    <td class="col-type" data-type="動画">Video</td>
+    <td class="col-title"><a href="video_SODYpdUuIuo_en.html" title="Home&#x27;s Slow Poison- Microwave, Salt, cotton, Toothbrush| Barbara O’Neill on Body to Beiing | Shlloka">Home&#x27;s Slow Poi…</a><br><span class="title-ch" title="SHLLOKA">SHLLOKA</span></td>
+    <td class="col-duration">59:13</td>
+    <td class="col-summary"><span class="summary-topic">■[No subtitles] Household health risks</span><br>[No subtitles] Natural health speaker Barbara O&#x27;Neill discusses health risks from everyday items: microwave ovens, salt, cotton products, an…</td>
+    <td class="col-views">66万</td>
+    <td class="col-likes">2万</td>
+    <td class="col-momentum">5,898/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
     <td class="col-like"><button class="btn-like" onclick="addLike('SODYpdUuIuo')">&#10084; <span id="lc_SODYpdUuIuo">0</span></button><a class="like-reset" onclick="resetLike('SODYpdUuIuo')" href="#">&#215;</a></td>
     <td class="col-yt"><a href="https://www.youtube.com/watch?v=SODYpdUuIuo" target="_blank" rel="noopener">&#9654;</a></td>
   </tr>
   <tr>
-    <td class="col-date">06/13</td>
-    <td class="col-type">Short</td>
+    <td class="col-date">2025/06/04</td>
+    <td class="col-type" data-type="瞑想・音楽">瞑想・音楽</td>
+    <td class="col-title"><a href="video_boc5lYDBmDM_en.html" title="The Pineal DMT Harmonic | 2675 Hz Spontaneous Visionary Activation (4 Hours)">The Pineal DMT …</a><br><span class="title-ch" title="REIDOS Sonic Healing">REIDOS Sonic Healing</span></td>
+    <td class="col-duration">4:00:00</td>
+    <td class="col-summary"><span class="summary-topic">■[No subtitles] Pineal DMT harmonic 4-hour frequency</span><br>[No subtitles] A 4-hour meditation audio using 2675 Hz, claimed to activate spontaneous DMT release from the pineal gland. The pineal-DMT co…</td>
+    <td class="col-views">41万</td>
+    <td class="col-likes">9,666</td>
+    <td class="col-momentum">1,096/d</td>
+    <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
+    <td class="col-like"><button class="btn-like" onclick="addLike('boc5lYDBmDM')">&#10084; <span id="lc_boc5lYDBmDM">0</span></button><a class="like-reset" onclick="resetLike('boc5lYDBmDM')" href="#">&#215;</a></td>
+    <td class="col-yt"><a href="https://www.youtube.com/watch?v=boc5lYDBmDM" target="_blank" rel="noopener">&#9654;</a></td>
+  </tr>
+  <tr>
+    <td class="col-date">2005/04/24</td>
+    <td class="col-type" data-type="ショート動画">Short</td>
     <td class="col-title"><a href="video_jNQXAC9IVRw_en.html" title="Me at the zoo">Me at the zoo</a><br><span class="title-ch" title="jawed">jawed</span></td>
+    <td class="col-duration">0:19</td>
     <td class="col-summary"><span class="summary-topic">■First video on YouTube</span><br>YouTube co-founder Jawed Karim stands in front of the elephants at the zoo and simply remarks that they have &quot;really long trunks&quot; — 19 secon…</td>
+    <td class="col-views">3.9億</td>
+    <td class="col-likes">1897万</td>
+    <td class="col-momentum">5万/d</td>
     <td class="col-stars"><span class="stars-filled">★★</span><span class="stars-empty">★★★</span></td>
     <td class="col-like"><button class="btn-like" onclick="addLike('jNQXAC9IVRw')">&#10084; <span id="lc_jNQXAC9IVRw">0</span></button><a class="like-reset" onclick="resetLike('jNQXAC9IVRw')" href="#">&#215;</a></td>
     <td class="col-yt"><a href="https://www.youtube.com/watch?v=jNQXAC9IVRw" target="_blank" rel="noopener">&#9654;</a></td>
@@ -463,6 +816,19 @@ function resetLike(vid) {
   if (!el) return;
   el.textContent = '0';
   localStorage.setItem('like_' + vid, '0');
+}
+
+function applyFilter() {
+  var showShort = document.getElementById('filter-short').checked;
+  var showLong = document.getElementById('filter-long').checked;
+  document.querySelectorAll('.video-table tbody tr').forEach(function(tr) {
+    var typeCell = tr.querySelector('.col-type');
+    if (!typeCell) return;
+    var t = typeCell.getAttribute('data-type') || '';
+    var isShort = t === 'ショート動画' || t === 'Short';
+    var isLong = !isShort;
+    tr.style.display = (isShort && showShort) || (isLong && showLong) ? '' : 'none';
+  });
 }
 </script>
   </main>

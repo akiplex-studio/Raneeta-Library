@@ -257,6 +257,10 @@ summary {
 .video-table .col-stars  { white-space: nowrap; }
 .video-table .col-like   { white-space: nowrap; }
 .video-table .col-yt     { white-space: nowrap; }
+.video-table .col-duration { white-space: nowrap; text-align: right; font-size: 0.82rem; }
+.video-table .col-views { white-space: nowrap; text-align: right; font-size: 0.82rem; }
+.video-table .col-likes { white-space: nowrap; text-align: right; font-size: 0.82rem; }
+.video-table .col-momentum { white-space: nowrap; text-align: right; font-size: 0.82rem; color: #e8a735; }
 .stars-filled  { color: #f5a623; }
 .stars-empty   { color: #555; }
 .unrated-gray  { color: #777; font-size: 0.78rem; }
@@ -335,7 +339,23 @@ summary {
   .video-table .col-like  { order: 6; margin-right: 12px; }
   .video-table .col-yt    { order: 7; }
   .video-table .col-yt a  { font-size: 1.05rem; padding: 2px 6px; }
+  .video-table .col-duration { order: 8; font-size: 0.78rem; color: #888; }
+  .video-table .col-views { order: 9; font-size: 0.78rem; color: #888; }
+  .video-table .col-likes { order: 10; font-size: 0.78rem; color: #888; }
+  .video-table .col-momentum { order: 11; font-size: 0.78rem; }
 }
+
+/* フィルターバー */
+.filter-bar {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.9rem;
+}
+.filter-bar label { cursor: pointer; color: #aaa; }
+.filter-bar input[type="checkbox"] { margin-right: 4px; }
+.filter-label { color: #888; font-weight: 700; }
 
   </style>
 </head>
