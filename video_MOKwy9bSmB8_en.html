@@ -380,15 +380,6 @@ AI Rating: <span class="stars-filled">★</span><span class="stars-empty">★★
 <p class="transcript">A 36-second short by Conciousmb. Shows footage from a US congressional hearing where the speaker repeatedly loops the phrase &#x27;page 55 from the committee&#x27;s interview with FBI employee&#x27;, creating a glitch-like effect. The video&#x27;s title and framing suggest a woman seated behind the speaker may be telepathically or psychically influencing the speech. In reality, the effect is almost certainly the result of audio editing (looping) or a broadcast/recording glitch. The clip has no informational or educational value.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>Congressional hearing footage where the speaker repeats the same phrase in a glitch-like loop</li>
-  <li>Framed as if a woman behind the speaker is telepathically influencing the speech</li>
-  <li>Almost certainly audio editing or a broadcast glitch</li>
-  <li>No informational value</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Congressional hearing footage plays</li>
@@ -396,6 +387,49 @@ AI Rating: <span class="stars-filled">★</span><span class="stars-empty">★★
   <li>The video draws attention to a woman seated behind the speaker</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('MOKwy9bSmB8')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

@@ -380,15 +380,6 @@ AI Rating: <span class="stars-filled">★</span><span class="stars-empty">★★
 <p class="transcript">A 2-minute 24-second video by Elizabeth April presenting a claim attributed to an unnamed whistleblower: that the CIA is using the databases of DNA testing services 23andMe and ancestry.com to identify and track individuals with &#x27;hybrid DNA&#x27; (alleged alien-human genetic mix). The presenter claims she has been saying this for ten years and also references cloning bases (genetic replication facilities). There is no verifiable evidence, no named source, and no mechanism proposed. While legitimate privacy concerns about commercial DNA databases do exist, this video&#x27;s claims are in an entirely different category — pure conspiracy content. Not worth watching for information value.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>Claims CIA is tracking &#x27;hybrid DNA&#x27; via 23andMe and ancestry.com databases</li>
-  <li>Source is an anonymous whistleblower only</li>
-  <li>Also references cloning bases / genetic replication facilities</li>
-  <li>Zero verifiable evidence; fully conspiracy-tier content</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Opens with &quot;I heard from a whistleblower&quot;</li>
@@ -398,6 +389,49 @@ AI Rating: <span class="stars-filled">★</span><span class="stars-empty">★★
   <li>Closes with a call to awareness directed at viewers</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('2QUVP1zfuKY')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

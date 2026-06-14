@@ -380,15 +380,6 @@ AI Rating: <span class="stars-filled">★★★</span><span class="stars-empty">
 <p class="transcript">A 2-minute 57-second video by The Paradigm Experience. The creator prompts ChatGPT as a spiritual translator with rules: explain Jesus&#x27;s most quoted lines without religious packaging, don&#x27;t remove the power — only the dust, keep answers to 1-2 sentences, and make the most devout Christian in the room go quiet for a second. Five quotes are covered: The kingdom of God is within you (stop looking for heaven as a location — it&#x27;s a state of being you keep postponing until after death), Forgive them, for they know not what they do (not excusing cruelty but seeing so deeply into unconsciousness that even violence became evidence of blindness), and three more. The AI responses are genuinely sharp and well-received. However, the final third pivots to promoting an AI tool called Victor. An interesting AI use case and a fresh take on familiar religious language.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>Prompted ChatGPT as a spiritual translator to explain Jesus without religious packaging</li>
-  <li>The kingdom of God is within you → a state of being you keep postponing until after death</li>
-  <li>The truth will set you free → frees the part of you willing to lose the lie</li>
-  <li>Interesting AI use case, but the back half is an AI tool (Victor) promotion</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Explains the ChatGPT prompt design (spiritual translator, keep the power, remove the dust)</li>
@@ -399,6 +390,49 @@ AI Rating: <span class="stars-filled">★★★</span><span class="stars-empty">
   <li>Pivots to promoting the AI tool Victor</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('ITbmLZuqmq4')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

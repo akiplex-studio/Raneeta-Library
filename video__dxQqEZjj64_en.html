@@ -380,15 +380,6 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
 <p class="transcript">A 1-minute 11-second short by Conciousmb, filmed in a grocery store where paper price tags are being replaced with digital ones. The presenter claims these electronic shelf labels contain cameras that use facial recognition to link customers to their Amazon, Facebook, and other online accounts, then dynamically adjust grocery prices based on individual spending habits. While electronic shelf labels (ESL) are a real retail technology, and dynamic pricing is a legitimate business practice online, the specific claim that in-store ESLs use facial recognition for individual price discrimination has no supporting evidence. The privacy concern is worth thinking about in principle, but the presented claim is unverified conspiracy theory.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>Paper price tags being replaced with camera-equipped digital ones in the grocery store</li>
-  <li>Claims facial recognition links shoppers to Amazon/social media for individual pricing</li>
-  <li>Electronic shelf labels (ESL) are real technology, but individual dynamic pricing via facial recognition is unproven</li>
-  <li>The privacy concern has some merit as a discussion point, but the specific claim is unverified</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Shows paper and digital price tags coexisting in the store</li>
@@ -397,6 +388,49 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
   <li>Concludes that prices are dynamically adjusted based on individual spending power</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('_dxQqEZjj64')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

@@ -380,15 +380,6 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
 <p class="transcript">A 1-minute 13-second short clip by Billy Carson Official. Built around the premise that &#x27;the universe is voice-activated — your words are frequency commands to the quantum field.&#x27; It reframes two Bible passages (&#x27;the tongue has the power of life and death&#x27;; &#x27;by your words you will be justified, and by your words you will be condemned&#x27;) as &#x27;frequency science.&#x27; The core claim is that self-talk and inner monologue literally construct your physical reality 6 months into the future. Law-of-attraction / manifestation content. While the psychology of positive self-talk and self-suggestion has legitimate research, the video&#x27;s framing of &#x27;quantum field commands&#x27; goes well beyond that into pseudoscience. The terms &#x27;quantum field&#x27; and &#x27;frequency commands&#x27; are used as metaphor without any grounding in quantum mechanics. For audiences interested in manifestation content; not informative for general purposes.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>Claims &#x27;the universe is voice-activated — words are frequency commands to the quantum field&#x27;</li>
-  <li>Reframes the Bible verse &#x27;the tongue has the power of life and death&#x27; as frequency science</li>
-  <li>Asserts that self-talk and inner monologue build your physical reality 6 months later</li>
-  <li>Uses &#x27;quantum field&#x27; and &#x27;frequency&#x27; as scientific-sounding terms without actual scientific support</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Opens with the premise: &#x27;The universe is voice-activated&#x27;</li>
@@ -398,6 +389,49 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
   <li>Concludes: self-talk and inner monologue form your reality 6 months from now</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('NansaaTavaw')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

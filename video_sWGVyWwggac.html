@@ -380,15 +380,6 @@ AI評価: <span class="stars-filled">★★★★</span><span class="stars-empty
 <p class="transcript">Connor Patonによる54秒の天体写真タイムラプス動画。世界で最も光害の少ない場所の一つから撮影したとされる天の川の映像で、谷の地形に完璧に沿うように伸びる天の川と、静水面に映る反射を同時に捉えた構図が美しい。1080万回以上再生された人気映像で、コメント欄には世界中からの称賛が集まっている。内容はシンプルで説明や語りはなく、映像と音楽のみで構成される純粋なビジュアル・自然映像作品。天体写真や星空に興味がある人、純粋に美しい映像を楽しみたい人に向いている。情報や学びというよりは癒しや感動のコンテンツ。</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">重要ポイント</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>世界最暗級の場所から撮影した天の川のタイムラプス</li>
-  <li>谷の地形に沿う天の川と水面の反射の同時構図</li>
-  <li>再生数1080万超の人気ショート映像</li>
-  <li>説明・語りなし。純粋な自然映像作品</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">全内容</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>暗い谷の風景から始まるオープニング</li>
@@ -397,6 +388,49 @@ AI評価: <span class="stars-filled">★★★★</span><span class="stars-empty
   <li>タイムラプスが進み天の川が移動して終了</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('sWGVyWwggac')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    全文翻訳を依頼
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = '依頼済み ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">※全文テキストはYouTube側の字幕でご確認ください</p>
 <a class="back-link" href="index.html">← 一覧へ戻る</a>
   </main>

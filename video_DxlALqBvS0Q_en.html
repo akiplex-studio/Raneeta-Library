@@ -380,16 +380,6 @@ AI Rating: <span class="stars-filled">★★★</span><span class="stars-empty">
 <p class="transcript">A 2-hour 19-minute 48-second long-form interview on Next Level Soul Podcast featuring Kyle Cease, a former stand-up comedian turned spiritual speaker and author. Key topics: (1) the relationship between the ego and the true self — how childhood trauma constructs the &#x27;I&#x27; character; (2) why he walked away from a successful comedy career — reaching the limit of defining himself through achievement; (3) his personal take on the Mandela Effect; (4) the experience and consciousness shifts from an 11-day fast; (5) how the sense of time has changed since 2012; (6) present-moment awareness and the practice of following the soul&#x27;s voice. The central message — &#x27;stop defining yourself by achievement and follow your soul&#x27; — is broadly relatable. The content is subjective spiritual narrative with no empirical grounding. Engaging in stretches, but at over 2 hours, selective viewing by topic is recommended.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>How childhood trauma builds the ego&#x27;s &#x27;I&#x27; character — explained</li>
-  <li>Why he quit comedy: reaching the limit of defining himself through achievement</li>
-  <li>His personal view on the Mandela Effect</li>
-  <li>The 11-day fast and its effects on consciousness</li>
-  <li>Core message: present-moment awareness and the practice of following the soul&#x27;s voice</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Introduction and the story of transitioning from comedian to spiritual speaker</li>
@@ -402,6 +392,49 @@ AI Rating: <span class="stars-filled">★★★</span><span class="stars-empty">
   <li>Closes with the message: &#x27;live from being, not from achieving&#x27;</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('DxlALqBvS0Q')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

@@ -380,16 +380,6 @@ AI Rating: <span class="stars-filled">★★★</span><span class="stars-empty">
 <p class="transcript">A 20-minute 40-second podcast-format video by Valuetainment. Starting from the announcement of a Michael Jackson biopic starring his nephew Jaafar Jackson, the hosts discuss: (1) MJ&#x27;s relationship with father Joe Jackson, including the harsh training and reportedly abusive aspects of his upbringing; (2) MJ&#x27;s reported statements that &#x27;they&#x27;re going to kill me,&#x27; and what he may have meant; (3) the fringe claim that changing music tuning from A=432Hz to A=440Hz enables emotional manipulation (this is pseudoscience with no credible support); (4) the circumstances of the &#x27;This Is It&#x27; tour and the timeline leading to his death. The video does not definitively claim MJ was murdered but poses the question. The discussion around Joe&#x27;s relationship and MJ&#x27;s own fear statements draws on real documented accounts. Entertaining as a fan discussion; treat the frequency manipulation claim as fringe.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>Nephew Jaafar Jackson cast as MJ in the biopic — how that came about</li>
-  <li>Discussion of Joe Jackson&#x27;s harsh training and reportedly abusive relationship with MJ</li>
-  <li>MJ reportedly told people &#x27;they&#x27;re going to kill me&#x27; — the hosts examine what he meant</li>
-  <li>The 432Hz vs 440Hz music frequency manipulation claim (pseudoscientific; treat with skepticism)</li>
-  <li>Context of the &#x27;This Is It&#x27; tour and timeline leading to MJ&#x27;s death</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Introduction: MJ biopic announced, nephew Jaafar cast as the lead</li>
@@ -400,6 +390,49 @@ AI Rating: <span class="stars-filled">★★★</span><span class="stars-empty">
   <li>Closing discussion on whether MJ&#x27;s death was the result of foul play</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('Q9YQul2WSfA')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

@@ -380,16 +380,6 @@ AI Rating: <span class="stars-filled">★★★</span><span class="stars-empty">
 <p class="transcript">A 12-minute 47-second video by Stefan Burns, who identifies as a physicist at the University of Guam (GU). He reports and analyzes three anomalous events that occurred in close succession along the US East Coast: (1) a fireball over Michigan, estimated to be a ~4-inch space rock; (2) a sonic boom near Boston, rated by USGS as equivalent to 230 tons of TNT; and (3) an unexplained sonic boom in South Carolina. He contextualizes these against a spike in fireball activity from the previous March–April, framing the current events as a potential &#x27;second wave.&#x27; The underlying news events are real, and the USGS data reference adds some analytical credibility. However, the &#x27;warning&#x27; framing and the implied narrative of a coordinated threat may involve overreach. Useful as a summary of real events, but treat the interpretation with appropriate skepticism.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>Michigan fireball: estimated ~4-inch space rock</li>
-  <li>Boston sonic boom: USGS-rated equivalent to 230 tons of TNT</li>
-  <li>South Carolina sonic boom: cause remains unidentified</li>
-  <li>Frames the cluster as a possible &#x27;second wave&#x27; following last spring&#x27;s fireball surge</li>
-  <li>Underlying news events are real; &#x27;warning&#x27; narrative framing may involve overreach</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Opens by flagging three anomalous events in rapid succession along the US East Coast</li>
@@ -400,6 +390,49 @@ AI Rating: <span class="stars-filled">★★★</span><span class="stars-empty">
   <li>Closes with a call for attention to the pattern</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('gR9cVV1kwT8')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

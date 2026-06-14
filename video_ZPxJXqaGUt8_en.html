@@ -380,16 +380,6 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
 <p class="transcript">A 1-minute 29-second clip of spiritual author Gregg Braden speaking on a talk show (the host is addressed as &quot;Joe&quot;; the show&#x27;s name is unconfirmed). He explains that human cells are &quot;gate circuits&quot; with inputs and outputs, possessing mechanisms equivalent to transistors, resistors, and capacitors — electrical entities. He claims each cell holds about 0.07 volts, and that summing the body&#x27;s 50 trillion cells yields roughly 3.5 trillion volts (note: voltage cannot be summed this way; the calculation is scientifically wrong). He further claims humans emit and receive photons to store information, and that consciously controlling this for healing, intuition, and resilience is the secret hidden by religions and mystery schools. He closes with a conspiratorial claim that there is an organized effort to replace human nature with technology and suppress this ability.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>Claims &quot;cells are electrical circuits — 0.07V each, ~3.5 trillion volts total&quot; (note: the math is scientifically wrong)</li>
-  <li>Claims &quot;humans emit and receive photons and store information like a chip&quot;</li>
-  <li>The core theme: conscious self-control applied to healing, intuition, and resilience</li>
-  <li>Closes with a conspiracy theory about an organized effort to hide this ability and replace humanity with technology</li>
-  <li>Gives the gist in 89 seconds if you&#x27;re into law-of-attraction / consciousness topics, but the science is thin</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Opens by saying human cells are &quot;gate circuits&quot; with inputs and outputs</li>
@@ -405,6 +395,49 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
   <li>Ends by saying part of that effort is &quot;replacing humanity with technology&quot;</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('ZPxJXqaGUt8')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

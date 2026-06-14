@@ -380,16 +380,6 @@ AI Rating: <span class="stars-filled">★★★★</span><span class="stars-empt
 <p class="transcript">A 23-minute 48-second documentary-style video by Video Advice, editing and contextualizing the testimony of ex-CIA officer John Stockwell. Topics covered: (1) MK-Ultra (psychological manipulation and drug experiments); (2) CIA media operations using 200 journalist assets; (3) over 1,200 propaganda books published by the CIA; (4) historical ties between the CIA and drug cartels via the French Connection, Golden Triangle, and Afghanistan; (5) alleged evidence destruction by George Bush; (6) the military-industrial complex and taxpayer funds. Much of this is drawn from the Church Committee — the 1975 Senate Select Committee that formally investigated CIA abuses — giving the content a degree of documented credibility beyond typical conspiracy fare. Recommended for anyone interested in 20th-century intelligence history and media literacy.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>MK-Ultra: the CIA&#x27;s official program of psychological manipulation and drug testing (confirmed by Church Committee)</li>
-  <li>Testimony that CIA used 200 journalist assets for media manipulation</li>
-  <li>Over 1,200 propaganda books reportedly published by the CIA</li>
-  <li>CIA ties to drug cartels via the French Connection, Golden Triangle, and Afghanistan</li>
-  <li>Much of the content is grounded in the Church Committee&#x27;s 1975 official Senate investigation</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Introduction to John Stockwell&#x27;s background and decision to become a whistleblower</li>
@@ -401,6 +391,49 @@ AI Rating: <span class="stars-filled">★★★★</span><span class="stars-empt
   <li>Summary drawing on Church Committee findings and implications for today</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('xKJ6NPEDuZA')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

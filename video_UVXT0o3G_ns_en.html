@@ -380,15 +380,6 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
 <p class="transcript">A 1-minute 49-second short by SamuelbleeMD. Frames the burning of the Library of Alexandria as the final chapter in a Toth-Luciferian knowledge-monopoly plan. Claims the library held translations of the Emerald Founder Records and CDT Plate records — allegedly containing knowledge of multidimensional human anatomy, galactic history, and DNA activation science. The narrative includes the Luciferian Covenant (a secret pact predating the Atlantean flood), Toth stealing the founder records, orchestrating a cataclysm to wipe humanity&#x27;s memory, and then reintroducing distorted versions of stolen knowledge as religion and mythology. The historical burning of Alexandria is real, but the interpretation offered here is entirely occult/esoteric fiction. The closing message — knowledge makes a sovereign human uncontrollable — is rhetorically effective but does not validate the specific claims.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>Claims the Library housed the last public copies of Emerald Founder Record translations</li>
-  <li>Attributes the burning to a Toth-Luciferian group&#x27;s knowledge-monopoly plan</li>
-  <li>References the Atlantean flood, DNA activation science, and CDT Plate records</li>
-  <li>The library&#x27;s destruction is historical fact; the interpretation is purely occult fiction</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Opens by saying the Library of Alexandria was not just a library</li>
@@ -398,6 +389,49 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
   <li>Concludes: the library burning was the final chapter of deliberate knowledge erasure</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('UVXT0o3G_ns')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

@@ -380,16 +380,6 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
 <p class="transcript">A 7-minute 7-second video by GFL Station presenting what it describes as a channeled message from T&#x27;EEAH, a being from Arcturus. The message centers on three themes: (1) &#x27;it is time to make a door in the sealed room of the self&#x27; — a metaphor for opening to transformation; (2) the old self&#x27;s mechanism for sealing off thoughts is collapsing; and (3) a transition to telepathy and Unity Consciousness is currently underway. An astrological element ties these shifts to Jupiter&#x27;s entry into the sign of Cancer. The delivery is calm and meditative, but the content is entirely channeling-genre and unverifiable. Intended for audiences already immersed in New Age or galactic spirituality; no general informational value.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>Claims to be a channeled message from T&#x27;EEAH, an Arcturian being</li>
-  <li>Uses the metaphor of &#x27;making a door in the sealed room of the self&#x27; for transformation</li>
-  <li>Claims the old self&#x27;s thought-sealing function is collapsing</li>
-  <li>Teaches that a transition to telepathy and Unity Consciousness is now underway</li>
-  <li>Links consciousness shifts to Jupiter&#x27;s astrological entry into Cancer</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>T&#x27;EEAH introduces herself as a being from Arcturus and frames the message</li>
@@ -400,6 +390,49 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
   <li>Closes with the message that this era is a pivotal turning point in consciousness</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('q0JGAT4HZHE')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

@@ -380,15 +380,6 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
 <p class="transcript">A 1-minute 5-second clip from 4biddenknowledge Podcast Network. Starting from a premise of a universal creator and extraterrestrial beings who mated with humans and built advanced civilizations, the speaker draws a line from an alleged underwater structure at the center of the Bermuda Triangle through the Earth to the Dragon Triangle on the opposite side — Japan, home to the Yonaguni underwater monument. The Yonaguni formation is real and well-documented, but whether it is man-made or a natural geological formation remains scientifically unresolved. The ancient-civilization angle is engaging but no supporting data is presented. The clip ends with a promotional pitch for a spiritual tour.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>References an underwater structure at the center of the Bermuda Triangle</li>
-  <li>Connects it to the Dragon Triangle and Japan&#x27;s Yonaguni underwater monument</li>
-  <li>Claims advanced ancient civilizations built pyramids worldwide</li>
-  <li>Yonaguni is real, but its origin (man-made vs. natural) is academically unresolved</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Opens with the premise of a universal creator and extraterrestrial contact</li>
@@ -398,6 +389,49 @@ AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★
   <li>Closes with a spiritual tour promotion</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('4EqkbCAdG30')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>

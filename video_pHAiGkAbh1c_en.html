@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synthetic Frequency War 2026 😳</title>
+  <style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Meiryo", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+               "Yu Gothic", "YuGothic", sans-serif;
+  background: #121212;
+  color: #e0e0e0;
+  line-height: 1.8;
+}
+a { color: #8ab4f8; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ページ共通コンテナ */
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+/* 一覧ページ用: 画面幅いっぱい */
+.container.wide {
+  max-width: none;
+  padding: 24px 28px;
+}
+
+/* ヘッダ */
+.site-header {
+  background: #1e1e1e;
+  border-bottom: 2px solid #333;
+  padding: 16px 0;
+  margin-bottom: 32px;
+}
+.site-header .container { position: relative; }
+.site-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.06em;
+  color: #d8b865;
+  background: linear-gradient(135deg, #f0e0a8 0%, #d8b865 45%, #a8852e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.lang-switch {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #d8b865;
+  border: 1px solid #d8b865;
+  border-radius: 16px;
+  padding: 3px 12px;
+  text-decoration: none;
+}
+.lang-switch:hover { background: #2a2416; text-decoration: none; }
+
+/* セクション見出し */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ccc;
+  border-left: 4px solid #8ab4f8;
+  padding-left: 10px;
+  margin-bottom: 16px;
+}
+
+/* ダイジェストリンクリスト */
+.digest-list {
+  list-style: none;
+  margin-bottom: 40px;
+}
+.digest-list li {
+  margin-bottom: 8px;
+}
+.digest-list li a {
+  font-size: 0.97rem;
+}
+
+/* 動画カード */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.card {
+  background: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.09);
+  padding: 18px 20px;
+  transition: box-shadow .15s;
+}
+.card:hover { box-shadow: 0 3px 10px rgba(0,0,0,.14); }
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.card-meta {
+  font-size: 0.85rem;
+  color: #999;
+  margin-bottom: 10px;
+}
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* バッジ */
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-green  { background: #1e3a28; color: #81c995; }
+.badge-yellow { background: #3d3322; color: #fdd663; }
+.badge-gray   { background: #333; color: #bbb; }
+.badge-red    { background: #3c2422; color: #f28b82; }
+.badge-blue   { background: #1f2a3c; color: #8ab4f8; }
+
+/* 外部リンクボタン */
+.btn-yt {
+  display: inline-block;
+  font-size: 0.78rem;
+  padding: 3px 11px;
+  border-radius: 20px;
+  background: #ff0000;
+  color: #fff !important;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+.btn-yt:hover { background: #cc0000; }
+
+/* ─── 個別ページ ─── */
+.page-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.meta-block {
+  background: #1c1c1c;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  color: #aaa;
+  margin-bottom: 24px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+/* 本文 */
+.transcript {
+  max-width: 760px;
+  font-size: 0.97rem;
+}
+.transcript p {
+  margin-bottom: 1.2em;
+}
+.no-transcript-msg {
+  background: #1c1c1c;
+  border-left: 4px solid #555;
+  padding: 14px 18px;
+  border-radius: 4px;
+  color: #999;
+  font-size: 0.93rem;
+  margin-bottom: 16px;
+}
+details {
+  margin-top: 20px;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #aaa;
+  padding: 6px 0;
+  user-select: none;
+}
+.details-body {
+  background: #1c1c1c;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 0.88rem;
+  color: #bbb;
+  margin-top: 8px;
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
+
+/* ─── ダイジェストページ ─── */
+.digest-content {
+  max-width: 760px;
+}
+.digest-content h1 { font-size: 1.4rem; margin: 24px 0 12px; color: #ddd; }
+.digest-content h2 { font-size: 1.15rem; margin: 20px 0 8px; color: #ccc;
+                     border-bottom: 1px solid #333; padding-bottom: 4px; }
+.digest-content h3 { font-size: 1.0rem; margin: 16px 0 6px; color: #bbb; }
+.digest-content p  { margin-bottom: 1.1em; }
+.digest-content ul { list-style: disc; padding-left: 1.5em; margin-bottom: 1em; }
+.digest-content ul li { margin-bottom: 0.3em; }
+.digest-content hr { border: none; border-top: 1px solid #333; margin: 20px 0; }
+.digest-content strong { font-weight: 700; }
+
+/* ─── 動画一覧テーブル ─── */
+.video-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 40px;
+}
+.video-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.video-table th {
+  background: #1f2a3c;
+  color: #8ab4f8;
+  font-weight: 700;
+  padding: 6px 8px;
+  white-space: nowrap;
+  border-bottom: 2px solid #2d4a77;
+  text-align: left;
+}
+.video-table td {
+  padding: 5px 8px;
+  border-bottom: 1px solid #2a2a2a;
+  vertical-align: top;
+}
+.video-table tr:nth-child(even) td { background: #181818; }
+.video-table tr:hover td { background: #222a38; }
+.video-table .col-date   { white-space: nowrap; }
+.video-table .col-title  { white-space: nowrap; }
+.video-table .title-ch   { color: #888; font-size: 0.74rem; display: inline-block; max-width: 11em; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; }
+.video-table .summary-topic { font-weight: 700; }
+.video-table .col-type   { white-space: nowrap; }
+.video-table .col-summary { min-width: 7em; word-break: break-all; }
+.video-table .col-stars  { white-space: nowrap; }
+.video-table .col-like   { white-space: nowrap; }
+.video-table .col-yt     { white-space: nowrap; }
+.video-table .col-duration { white-space: nowrap; text-align: right; font-size: 0.82rem; }
+.video-table .col-views { white-space: nowrap; text-align: right; font-size: 0.82rem; }
+.video-table .col-likes { white-space: nowrap; text-align: right; font-size: 0.82rem; }
+.video-table .col-momentum { white-space: nowrap; text-align: right; font-size: 0.82rem; color: #e8a735; }
+.stars-filled  { color: #f5a623; }
+.stars-empty   { color: #555; }
+.unrated-gray  { color: #777; font-size: 0.78rem; }
+.btn-like {
+  background: none;
+  border: 1px solid #444;
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 1px 7px;
+  font-size: 0.8rem;
+  color: #f28b82;
+  transition: background .1s;
+}
+.btn-like:hover { background: #3c2422; }
+.like-reset {
+  font-size: 0.7rem;
+  color: #777;
+  cursor: pointer;
+  margin-left: 4px;
+  text-decoration: none;
+}
+.like-reset:hover { color: #f28b82; }
+
+/* スマホ対応 */
+@media (max-width: 600px) {
+  .site-header h1 { font-size: 1.1rem; }
+  .page-title { font-size: 1.1rem; }
+  .card { padding: 14px 14px; }
+  .container.wide { padding: 16px 10px; }
+
+  /* 一覧テーブル → カード型レイアウト */
+  .video-table-wrap { overflow-x: visible; }
+  .video-table, .video-table tbody { display: block; width: 100%; }
+  .video-table thead { display: none; }
+  .video-table tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.09);
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+  .video-table td {
+    display: block;
+    border: none;
+    padding: 0;
+    background: none !important;
+  }
+  .video-table tr:nth-child(even) td,
+  .video-table tr:hover td { background: none !important; }
+  /* 1行目: タイトル(全幅) */
+  .video-table .col-title {
+    order: 1;
+    width: 100%;
+    white-space: normal;
+    font-size: 0.98rem;
+    margin-bottom: 4px;
+  }
+  .video-table .title-ch { max-width: none; }
+  /* 2行目: 概要+説明(全幅) */
+  .video-table .col-summary {
+    order: 2;
+    width: 100%;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    font-size: 0.85rem;
+    color: #bbb;
+    margin-bottom: 8px;
+  }
+  /* 3行目: 日付・タイプ・評価・いいね・元動画を横並び */
+  .video-table .col-date  { order: 3; font-size: 0.78rem; color: #888; margin-right: 10px; }
+  .video-table .col-type  { order: 4; font-size: 0.78rem; color: #888; margin-right: 10px; }
+  .video-table .col-stars { order: 5; font-size: 0.82rem; margin-right: auto; }
+  .video-table .col-like  { order: 6; margin-right: 12px; }
+  .video-table .col-yt    { order: 7; }
+  .video-table .col-yt a  { font-size: 1.05rem; padding: 2px 6px; }
+  .video-table .col-duration { order: 8; font-size: 0.78rem; color: #888; }
+  .video-table .col-views { order: 9; font-size: 0.78rem; color: #888; }
+  .video-table .col-likes { order: 10; font-size: 0.78rem; color: #888; }
+  .video-table .col-momentum { order: 11; font-size: 0.78rem; }
+}
+
+/* フィルターバー */
+.filter-bar {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.9rem;
+}
+.filter-bar label { cursor: pointer; color: #aaa; }
+.filter-bar input[type="checkbox"] { margin-right: 4px; }
+.filter-label { color: #888; font-weight: 700; }
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1><a href="index_en.html" style="color:inherit;text-decoration:none;">Raneeta Library</a></h1>
+      <a class="lang-switch" href="video_pHAiGkAbh1c.html">日本語</a>
+    </div>
+  </header>
+  <main class="container">
+<a class="back-link" href="index_en.html">← Back to list</a>
+<h1 class="page-title">Synthetic Frequency War 2026 😳</h1>
+<div class="meta-block">Channel: Elizabeth April<br>
+Duration: 0:03:00<br>
+Uploaded: 2026-05-21<br>
+URL: <a href="https://www.youtube.com/watch?v=pHAiGkAbh1c" target="_blank" rel="noopener">https://www.youtube.com/watch?v=pHAiGkAbh1c</a><br>
+AI Rating: <span class="stars-filled">★★</span><span class="stars-empty">★★★</span></div>
+<div class="video-embed" style="max-width:700px;margin:0 auto 32px;"><div style="position:relative;padding-top:56.25%;height:0;overflow:hidden;"><iframe src="https://www.youtube.com/embed/pHAiGkAbh1c" title="Synthetic Frequency War 2026 😳" frameborder="0" referrerpolicy="origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div></div>
+<section style="margin-bottom:28px;">
+<h2 class="section-title">Summary</h2>
+<p class="transcript">This video claims that behind the geopolitical chaos and social unrest of 2026 lies an invisible &quot;synthetic frequency war.&quot; It argues specific frequencies are being used to manipulate human emotions, behavior, and health. The structure is similar to 5G and electromagnetic wave conspiracy theories. While frequencies do biologically affect organisms scientifically, claims of intentional &quot;frequency warfare&quot; lack evidence.</p>
+</section>
+<section style="margin-bottom:28px;">
+<h2 class="section-title">Full Outline</h2>
+<ul style="padding-left:1.5em;line-height:1.9;">
+  <li>Claims a &quot;synthetic frequency war&quot; underlies 2026 geopolitical chaos</li>
+  <li>States invisible frequencies are being used to manipulate humans</li>
+  <li>Argues emotions, behavior, and health are controlled via frequencies</li>
+  <li>Shares structural similarities with 5G and EMF conspiracy theories</li>
+  <li>No evidence supports intentional frequency warfare</li>
+</ul>
+</section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('pHAiGkAbh1c')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
+<p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
+<a class="back-link" href="index_en.html">← Back to list</a>
+  </main>
+</body>
+</html>

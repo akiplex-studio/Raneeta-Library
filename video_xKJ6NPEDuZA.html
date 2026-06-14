@@ -380,16 +380,6 @@ AI評価: <span class="stars-filled">★★★★</span><span class="stars-empty
 <p class="transcript">Video Adviceによる23分48秒の動画。元CIA工作員ジョン・ストックウェルが行った歴史的な内部告発証言の映像を編集・解説するドキュメンタリー形式のコンテンツ。扱う内容は①MKウルトラ計画(心理操作・薬物実験)、②CIAが200人のジャーナリストを協力者として活用していたメディア操作、③1200冊以上のプロパガンダ書籍の出版、④フレンチコネクション・ゴールデントライアングル・アフガニスタンを通じた麻薬カルテルとCIAの歴史的関係、⑤ジョージ・ブッシュによる証拠隠滅、⑥軍産複合体と税金の問題。これらはチャーチ委員会(1975年の上院特別委員会)の公式調査記録に基づいており、陰謀論ではなく歴史的事実として裏付けられている部分が多い。現代の情報リテラシーを高める上で見る価値が高い内容。</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">重要ポイント</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>MKウルトラ計画: 心理操作・薬物実験のCIA公式プログラム(チャーチ委員会確認済み)</li>
-  <li>CIAが200人のジャーナリストを協力者として活用していたと証言</li>
-  <li>1200冊以上のプロパガンダ書籍をCIAが出版していた</li>
-  <li>フレンチコネクション・ゴールデントライアングル・アフガニスタンを通じた麻薬カルテルとの関係</li>
-  <li>チャーチ委員会(1975年上院)の公式調査記録に基づく内容が多く、一定の信頼性あり</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">全内容</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>ジョン・ストックウェルの経歴と内部告発の経緯を紹介</li>
@@ -401,6 +391,49 @@ AI評価: <span class="stars-filled">★★★★</span><span class="stars-empty
   <li>チャーチ委員会の調査結果と現代への示唆でまとめ</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('xKJ6NPEDuZA')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    全文翻訳を依頼
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = '依頼済み ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">※全文テキストはYouTube側の字幕でご確認ください</p>
 <a class="back-link" href="index.html">← 一覧へ戻る</a>
   </main>

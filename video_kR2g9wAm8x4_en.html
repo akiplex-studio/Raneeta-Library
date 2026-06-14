@@ -380,15 +380,6 @@ AI Rating: <span class="stars-filled">★★★</span><span class="stars-empty">
 <p class="transcript">A 2-minute 12-second spiritual monologue by TribeOfSamuel, built around the premise: &quot;You didn&#x27;t come here to escape life — you came here to live it.&quot; The central concept is &#x27;descended mastery&#x27; — the idea that the soul&#x27;s purpose is not to ascend away from difficulty but to descend into human experience and bring light with it. Pain and trauma are reframed not as failures of the spirit but as the very arenas where spiritual practice proves itself. The message is more grounded than typical &#x27;love and light&#x27; content in that it does not advocate escapism. That said, it is entirely faith-based with no empirical support. Those looking for meaning in hardship may find it resonant; others may find it abstract.</p>
 </section>
 <section style="margin-bottom:28px;">
-<h2 class="section-title">Key Points</h2>
-<ul style="padding-left:1.5em;line-height:1.9;">
-  <li>&quot;You didn&#x27;t come here to escape your divine nature — you came to bring it into human form&quot;</li>
-  <li>&#x27;Descended mastery&#x27;: the soul&#x27;s purpose is to descend into experience, not escape upward</li>
-  <li>Pain and trauma are not obstacles to avoid but places to bring light into</li>
-  <li>True mastery is demonstrated inside difficult human experience, not outside it</li>
-</ul>
-</section>
-<section style="margin-bottom:28px;">
 <h2 class="section-title">Full Outline</h2>
 <ul style="padding-left:1.5em;line-height:1.9;">
   <li>Opens with the premise: you came here to live life, not escape it</li>
@@ -397,6 +388,49 @@ AI Rating: <span class="stars-filled">★★★</span><span class="stars-empty">
   <li>Concludes: bringing light into difficult places is what true mastery looks like</li>
 </ul>
 </section>
+<div id="translate-btn-wrap" style="display:none;margin-bottom:20px;">
+  <button id="btn-translate" onclick="requestTranslate('kR2g9wAm8x4')"
+    style="background:#1f2a3c;border:1px solid #2d4a77;border-radius:20px;padding:8px 20px;color:#8ab4f8;font-size:0.9rem;font-weight:600;cursor:pointer;">
+    Request Translation
+  </button>
+  <span id="translate-msg" style="margin-left:12px;font-size:0.85rem;color:#81c995;display:none;"></span>
+</div>
+<script>
+(function() {
+  fetch('/ping').then(function(r) {
+    if (r.ok) document.getElementById('translate-btn-wrap').style.display = '';
+  }).catch(function(){});
+})();
+function requestTranslate(vid) {
+  var btn = document.getElementById('btn-translate');
+  var msg = document.getElementById('translate-msg');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  fetch('/request-translate', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({video_id: vid})
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.ok) {
+      btn.textContent = 'Requested ✓';
+      btn.style.color = '#81c995';
+      btn.style.borderColor = '#81c995';
+    } else {
+      msg.style.display = '';
+      msg.style.color = '#f28b82';
+      msg.textContent = d.error || 'Error';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }).catch(function() {
+    msg.style.display = '';
+    msg.style.color = '#f28b82';
+    msg.textContent = 'Server error';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+</script>
 <p style="font-size:0.82rem;color:#aaa;margin-bottom:16px;">Full transcript is available via YouTube captions.</p>
 <a class="back-link" href="index_en.html">← Back to list</a>
   </main>
